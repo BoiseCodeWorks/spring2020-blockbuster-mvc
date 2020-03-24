@@ -21,6 +21,30 @@ namespace bb_mvc.Services
                 var video = _store.Videos[i];
                 if (video.IsAvailable)
                 {
+                    //NOTE Casting Examples
+                    // if (video is DVD) //check for type
+                    // {
+                    //     var videoDVD = (DVD)video; //Explicit casting
+                    //     string message = $"{i + 1}. {video.Title} ({video.Rating}) DVD";
+                    //     if (videoDVD.IsHD)
+                    //     {
+                    //         message += "-HD";
+                    //     }
+                    //     Messages.Add(new Message(message));
+                    //     continue;
+                    // }
+                    var videoDVD = video as DVD; //Explicit Cast (try to cast, if failed set it to null)
+                    if (videoDVD != null) // check for success
+                    {
+                        string message = $"{i + 1}. {video.Title} ({video.Rating}) DVD";
+                        if (videoDVD.IsHD)
+                        {
+                            message += "-HD";
+                        }
+                        Messages.Add(new Message(message));
+                        continue;
+                    }
+
                     Messages.Add(new Message($"{i + 1}. {video.Title} ({video.Rating})"));
                 }
             }
