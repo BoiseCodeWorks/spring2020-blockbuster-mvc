@@ -8,9 +8,10 @@ namespace bb_mvc.Services
     class BlockbusterService
     {
         private Store _store { get; set; } = new Store();
-
         //NOTE this is where I will store everything the controller needs to print
-        public List<string> Messages { get; set; } = new List<string>();
+        public List<Message> Messages { get; set; } = new List<Message>();
+
+
         public void AddVideoMenuToMessages()
         {
             //NOTE You could use "Where" as a fitler before printing (you will need Linq)
@@ -20,7 +21,7 @@ namespace bb_mvc.Services
                 var video = _store.Videos[i];
                 if (video.IsAvailable)
                 {
-                    Messages.Add($"{i + 1}. {video.Title} ({video.Rating})");
+                    Messages.Add(new Message($"{i + 1}. {video.Title} ({video.Rating})"));
                 }
             }
         }
@@ -33,12 +34,12 @@ namespace bb_mvc.Services
                 if (videoToRent.IsAvailable)
                 {
                     videoToRent.IsAvailable = false;
-                    Messages.Add("Successfully Checked out " + videoToRent.Title);
+                    Messages.Add(new Message("Successfully Checked out " + videoToRent.Title, ConsoleColor.Green));
                     return;
                 }
             }
 
-            Messages.Add("Invalid Movie Number");
+            Messages.Add(new Message("Invalid Movie Number", ConsoleColor.Red));
 
         }
     }

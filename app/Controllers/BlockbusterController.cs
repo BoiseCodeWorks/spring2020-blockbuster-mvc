@@ -43,23 +43,25 @@ namespace bb_mvc.Controllers
                     break;
                 default:
                     //number check here if not hanlding with "rent"
-                    Console.WriteLine("invalid Input");
+                    _bbs.Messages.Add(new Message("invalid Input", ConsoleColor.Red));
                     Thread.Sleep(1500);
                     break;
             }
-            Console.Clear();
         }
 
         private void Print()
         {
             Console.Clear();
-            Console.WriteLine(Utils.BlockbusterLogo);
+            _bbs.Messages.Insert(0, new Message(Utils.BlockbusterLogo, ConsoleColor.Blue));
             //itterate over messages and print each one
-            foreach (string message in _bbs.Messages)
+            foreach (Message message in _bbs.Messages)
             {
-                Console.WriteLine(message);
+                Console.ForegroundColor = message.Color;
+                Console.WriteLine(message.Body);
             }
+            Console.ForegroundColor = ConsoleColor.Black;
             _bbs.Messages.Clear();
+
         }
     }
 }
